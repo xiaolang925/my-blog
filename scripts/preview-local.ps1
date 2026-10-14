@@ -1,4 +1,4 @@
-param(
+﻿param(
   [switch]$SkipInstall,
   [int]$BlogPort = 4173
 )
@@ -118,7 +118,8 @@ if (-not (Test-Path -LiteralPath $NodeModulesDir)) {
   Write-Host "> skipped pnpm install because blog/node_modules exists"
 }
 
-Write-Host "3. Build Mizuki blog" -ForegroundColor Green
+Write-Host '3. Build Mizuki blog' -ForegroundColor Green
+  $env:MIZUKI_FONT_MODE = 'system'
 Invoke-Checked -Command "pnpm" -Arguments @("run", "build") -WorkingDirectory $BlogDir
 
 $EscapedBlog = Escape-PowerShellSingleQuote $BlogDir
