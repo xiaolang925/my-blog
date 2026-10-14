@@ -4,5 +4,6 @@
   "newFileFolderPath": "posts",
   "useMarkdownLinks": false,
   "showUnsupportedFiles": true,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "promptDelete": false
 }
