@@ -96,7 +96,7 @@ jobs:
       - name: Build blog
         working-directory: blog
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install --no-frozen-lockfile
           pnpm run build
 
       - name: Deploy
@@ -106,4 +106,5 @@ jobs:
           --project-name "${CLOUDFLARE_PROJECT_NAME}"
           --branch main
           --commit-message "Deploy blog from GitHub Actions"
+
 
