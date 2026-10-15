@@ -31,7 +31,8 @@ $GitPublishPaths = @(
   "blog/src/content/posts",
   "blog/src/content/spec",
   "blog/src/data/anime.ts",
-  "blog/src/data/friends.ts",`r`n  "blog/src/config",
+  "blog/src/data/friends.ts",
+  "blog/src/config",`r`n  "blog/src/assets/images",
   "blog/public/_redirects",
   "blog/public/assets",
   "blog/public/images/posts",
@@ -208,4 +209,5 @@ Write-Host "Done." -ForegroundColor Green
 if ($committed -and -not $PushChanges) {
   Write-Host "> run git push when ready to trigger GitHub Actions deployment"
 }
+
 
