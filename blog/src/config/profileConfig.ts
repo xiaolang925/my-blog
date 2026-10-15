@@ -13,18 +13,19 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "无敌小朗大王",
 			icon: "fa7-brands:bilibili",
-			url: "https://space.bilibili.com/701864046",
+			url: "https://space.bilibili.com/471244053",
 		},
 		{
 			name: "无敌小朗大王",
 			icon: "mdi:git",
-			url: "https://gitee.com/matsuzakayuki",
+			url: "https://gitee.com/smartlittlewolf",
 		},
 		{
 			name: "无敌小朗大王",
 			icon: "fa7-brands:github",
-			url: "https://github.com/matsuzaka-yuki",
+			url: "https://github.com/xiaolang925",
 		},
+		/*
 		{
 			name: "无敌小朗大王",
 			icon: "simple-icons:codeberg",
@@ -35,5 +36,6 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa7-brands:discord",
 			url: "https://discord.gg/MqW6TcQtVM",
 		},
+		*/
 	],
 };
