@@ -16,28 +16,10 @@ $BlogDist = Join-Path $BlogDir "dist"
 $SyncScript = Join-Path $BlogDir "scripts\sync-content.js"
 
 $GitPublishPaths = @(
-  "articles/posts",
-  "articles/friends",
-  "articles/anime",
-  "articles/templates",
-  "articles/spec",
-  "articles/site",
-  "articles/assets",
-  "articles/.obsidian/community-plugins.json",
-  "articles/.obsidian/templates.json",
-  "articles/.obsidian/types.json",
-  "articles/.obsidian/core-plugins.json",
-  "articles/.obsidian/plugins/post-history-tracker",
-  "blog/src/content/posts",
-  "blog/src/content/spec",
-  "blog/src/data/anime.ts",
-  "blog/src/data/friends.ts",
-  "blog/src/config",`r`n  "blog/src/assets/images",
-  "blog/public/_redirects",
-  "blog/public/assets",
-  "blog/public/images/posts",
-  "blog/src/generated/friends.ts",
-  "blog/src/generated/obsidian-config.ts"
+  "articles",
+  "blog",
+  "scripts",
+  ".github"
 )
 
 function Invoke-Checked {
