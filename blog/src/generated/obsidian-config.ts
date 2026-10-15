@@ -11,8 +11,8 @@ type MusicSettingsConfig = {
 };
 
 export const profileConfigOverride = {
-	"name": "Your Name",
-	"bio": "A personal blog built with Mizuki, Astro, Obsidian, and Cloudflare Pages.",
+	"name": "无敌小朗大王",
+	"bio": "愿你永远保持弱小",
 	"links": []
 } satisfies Partial<ProfileConfig>;
 
@@ -22,7 +22,7 @@ export const bannerConfigOverride = {
 		"interval": 3
 	},
 	"homeText": {
-		"title": "My Mizuki Blog",
+		"title": "小朗的小窝",
 		"subtitle": "Written in Obsidian"
 	}
 } satisfies Partial<SiteConfig["banner"]>;
