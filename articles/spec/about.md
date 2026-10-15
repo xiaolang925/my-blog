@@ -1,9 +1,8 @@
 ---
-title: About
-description: About this blog
+title: 关于我
+description: 欢迎来到无敌小狼大王的秘密基地
 ---
 
-# About
+# (｡･∀･)ﾉﾞ嗨！我是小朗
 
-This is an example special page. Edit this file from Obsidian, then run the
-sync script to copy it into your Mizuki content collection.
+嗯。。。我想找个大佬带带我。。。

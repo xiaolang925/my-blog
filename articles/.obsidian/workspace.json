@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "friends/example-friend.md",
+                "file": "spec/about.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "example-friend"
+              "title": "about"
             }
           }
         ]
@@ -189,6 +189,7 @@
   },
   "active": "f94f5faa18d53253",
   "lastOpenFiles": [
+    "friends/example-friend.md",
     "posts/my-first-post/my-first-post.md",
     "posts/hello-mizuki/hello-mizuki.md",
     "assets",
