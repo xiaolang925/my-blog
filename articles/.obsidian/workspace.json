@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "spec/about.md",
+                "file": "posts/three/three.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "about"
+              "title": "three"
             }
           }
         ]
@@ -190,9 +190,11 @@
   "active": "f94f5faa18d53253",
   "lastOpenFiles": [
     "posts/two/two.md",
+    "posts/three/three.md",
+    "spec/about.md",
+    "posts/three",
     "posts/my-first-post/my-first-post.md",
     "posts/hello-mizuki/hello-mizuki.md",
-    "spec/about.md",
     "posts/two",
     "posts/修修补补.md",
     "friends/example-friend.md",
