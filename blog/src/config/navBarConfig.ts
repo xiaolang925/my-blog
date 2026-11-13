@@ -220,7 +220,6 @@ export const navBarConfig: NavBarConfig = {
 					url: "/projects/",
 					icon: "material-symbols:work",
 				},
-				/*
 				{
 					name: "Skills",
 					url: "/skills/",
@@ -232,7 +231,6 @@ export const navBarConfig: NavBarConfig = {
 					url: "/timeline/",
 					icon: "material-symbols:timeline",
 				},
-				*/
 			],
 		},
 	],
