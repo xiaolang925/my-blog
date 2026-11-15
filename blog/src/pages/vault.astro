@@ -1,0 +1,39 @@
+---
+// ============================================================
+// 收藏页 /vault/
+//
+// 这一版是【纯界面】：没有门禁、没有解锁按钮、没有加密。
+// 数据在构建期读取，渲染出静态 HTML。
+// ============================================================
+
+import VaultCard from "@components/features/vault/VaultCard.astro";
+import { PageHeader } from "@components/features/page-header";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+// 相对路径引入数据（@ 别名配给了 src 下几个常用目录，data 不在其中）
+import { getBookmarksList } from "../data/bookmarks";
+
+// 构建期执行：这里拿到的是普通数组，不是 Promise
+const bookmarks = getBookmarksList();
+---
+
+<MainGridLayout title="收藏" description="小朗的私人收藏夹">
+    <!-- 外层壳：和 friends.astro 一样的结构，负责圆角和 overflow -->
+    <div
+		class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
+	>
+		<!-- card-base = 内容卡片的白底 / 圆角 / 内边距 -->
+		<div class="card-base z-10 px-9 py-6 relative w-full">
+			<!-- 大标题 + 副标题，收普通字符串，不用走 i18n -->
+			<PageHeader title="收藏" subtitle="随手攒下来的东西" />
+
+			<!-- 三列响应式网格：手机 1 列、≥640px 2 列、≥1280px 3 列
+			     断点类和 friends.astro:100 完全一致 -->
+			<div
+				class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-6"
+			>
+				{bookmarks.map((item) => <VaultCard bookmark={item} />)}
+			</div>
+		</div>
+	</div>
+</MainGridLayout>

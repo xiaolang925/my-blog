@@ -1,0 +1,175 @@
+---
+// ============================================================
+// VaultCard —— 收藏页的单张卡片
+//
+// 来源：从 components/features/friends/FriendCard.astro 抄来改的。
+// 为什么不直接复用 FriendCard：
+//   1) 它上面有个「复制链接」按钮，点击逻辑在 public/js/friends-page-handler.js 里。
+//      那个脚本必须先找到 #friend-search、#friends-grid、#no-results 三个元素，
+//      缺一个就 return false（脚本第 26-28 行）→ 收藏页没有搜索框，
+//      于是复制按钮点了没反应，而且不报错，非常难查。
+//   2) FriendCard 是主题自带组件，改它将来更新主题会被覆盖。
+//
+// 对外契约（只认这一个 prop）：
+//   <VaultCard bookmark={item} />
+//   item 必须严格符合 src/data/bookmarks.ts 里 BookmarkItem 的形状。
+// ============================================================
+
+// 只引类型，不引数据：让组件和数据源解耦
+// （../../../ = components/features/vault → features → components → src）
+import type { BookmarkItem } from "../../../data/bookmarks";
+
+interface Props {
+	bookmark:BookmarkItem;
+}
+
+const { bookmark } = Astro.props;
+
+// 取域名，显示在标题下方。
+// ⚠️ 坑：这里依赖 siteurl 是【完整 URL】，必须带 https://
+// 少了协议头时 new URL() 会在【构建时】抛错，浏览器里什么都看不到，
+// 报错只会出现在跑 pnpm dev / pnpm build 的那个终端里。
+const hostname = new URL(bookmark.siteurl).hostname;
+
+// 图标兜底。
+// imgurl 为空字符串时，不兜底就会渲染出一个空白方块（原版 FriendCard 没有兜底）。
+// /assets/home/default-logo.webp 对应 blog/public/assets/home/default-logo.webp，
+// public 下的文件按站点根路径访问，所以路径里不写 public。
+const iconSrc = bookmark.imgurl || "/assets/home/default-logo.webp";
+---
+
+
+
+<div
+	class="vault-card group relative bg-transparent rounded-xl border border-black/10 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+	data-title={bookmark.title.toLowerCase()}
+	data-desc={bookmark.desc.toLowerCase()}
+	data-tags={bookmark.tags.join(",")}
+>
+	<div class="p-6">
+		<!-- 头像和标题区 -->
+		<div class="flex items-start gap-4 mb-4">
+			<div
+				class="w-16 h-16 shrink-0 rounded-xl overflow-hidden bg-(--btn-regular-bg) ring-2 ring-transparent transition-all duration-300"
+			>
+				<img
+					src={iconSrc}
+					alt={bookmark.title}
+					class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+					loading="lazy"
+				/>
+			</div>
+
+			<div class="flex-1 min-w-0">
+				<h3
+					class="text-xl font-bold text-black/90 dark:text-white/90 mb-1 truncate group-hover:text-(--primary) transition-colors duration-200"
+				>
+					{bookmark.title}
+				</h3>
+				<a
+					href={bookmark.siteurl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-xs text-black/50 dark:text-white/50 hover:text-(--primary) truncate block transition-colors duration-200"
+				>
+					{hostname}
+				</a>
+			</div>
+		</div>
+
+		<!-- 描述：两行截断，min-h-10 保证 1 行描述的卡片和 2 行的高度一致 -->
+		<p
+			class="text-sm text-black/60 dark:text-white/60 mb-4 line-clamp-2 min-h-10"
+		>
+			{bookmark.desc}
+		</p>
+
+		<!-- 标签：这一版不做筛选，但照常显示，字段和样式都留着 -->
+		<div class="flex flex-wrap gap-2 mb-4">
+			{
+				bookmark.tags.map((tag) => (
+					<span class="px-2 py-1 text-xs rounded-md bg-(--primary)/10 text-(--primary) font-medium">
+						{tag}
+					</span>
+				))
+			}
+		</div>
+
+		<!-- 操作按钮：只剩一个「打开」。
+		     原版的「复制链接」按钮已删，原因见文件头注释。
+		     父级是 flex gap-2，现在只有一个子元素，且子元素有 flex-1，
+		     它会自动撑满整行宽度 —— 不需要手动加 w-full。 -->
+		<div class="flex gap-2">
+			<a
+				href={bookmark.siteurl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-(--primary) text-white hover:bg-(--primary)/90 active:scale-95 transition-all duration-200 font-medium text-sm"
+			>
+				<svg
+					class="w-4 h-4"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+					></path>
+				</svg>
+				打开
+			</a>
+		</div>
+	</div>
+
+	<!-- 悬停装饰：一层渐变，纯装饰，用 pointer-events-none 保证不挡点击 -->
+	<div
+		class="absolute inset-0 bg-linear-to-br from-(--primary)/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+	>
+	</div>
+</div>
+
+<style>
+	/* 入场动画：卡片从下方淡入。
+	   
+	   ⚠️ 注意这里的类名 .vault-card 必须和模板上的 class 一致。
+	   如果改了模板类名但忘了改这里，结果不是白屏，而是「动画消失、卡片直接出现」——
+	   因为 opacity: 0 也是写在这条规则里的，规则选不中元素时它压根不生效。
+	   反过来说，真要让卡片永久隐形，得是「加了 opacity: 0 但动画名写错」那种情况。 */
+	.vault-card {
+		animation: fadeInUp 0.5s ease-out forwards;
+		opacity: 0;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	/* 错峰延迟：让卡片一张接一张冒出来，而不是整齐地一起出现 */
+	.vault-card:nth-child(1) {
+		animation-delay: 0.05s;
+	}
+	.vault-card:nth-child(2) {
+		animation-delay: 0.1s;
+	}
+	.vault-card:nth-child(3) {
+		animation-delay: 0.15s;
+	}
+	.vault-card:nth-child(4) {
+		animation-delay: 0.2s;
+	}
+	.vault-card:nth-child(5) {
+		animation-delay: 0.25s;
+	}
+	.vault-card:nth-child(6) {
+		animation-delay: 0.3s;
+	}
+</style>
